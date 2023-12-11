@@ -1,0 +1,80 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: rgb(0, 0, 92);
+    color: white;
+    font-family: 'Lato', sans-serif;
+}
+
+/* Style for the search container */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center vertically on the viewport */
+}
+
+/* Style for the search input */
+#search-input {
+    padding: 10px;
+    width: 300px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+/* Style for the search button */
+#search-button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* Change button color on hover */
+#search-button:hover {
+    background-color: #0056b3;
+}
+
+h1 {
+    margin-top: 20%;
+    text-align: center; /* Center the text horizontally */
+    font-size: 24px; /* Adjust the font size as needed */
+     /* Add some space above the heading */
+}
+
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;/* Place the stars below other content */
+}
+
+.star {
+    position: relative;
+    width: 5px;
+    height: 5px;
+    background-color: #fff; /* White stars */
+    border-radius: 50%;
+    animation: twinkling 2s infinite; /* Customize animation duration as needed */
+}
+
+/* Keyframes animation for twinkling effect */
+@keyframes twinkling {
+    0% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.5;
+    }
+}

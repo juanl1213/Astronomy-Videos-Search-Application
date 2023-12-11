@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Astronomy</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" /> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Angkor&family=Cairo:wght@500&family=Lato&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background">
+        <div><h1>Astronomy Resources Repository for Beginners</h1></div>
+        <div class="search-container">
+            <form id="search-form" action="term_template.html" method="get">
+                <input type="text" id="search-input" name="term" placeholder="Type an astronomy-related term..." list="glossary">
+                <datalist id="glossary"></datalist>
+                <button id="search-button" type="submit">Search</button>
+            </form>
+        </div>
+        <div class="stars"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

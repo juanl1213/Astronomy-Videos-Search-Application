@@ -1,0 +1,20 @@
+{
+  "name": "easyastronomy-astronomyresourcesrepository",
+  "version": "1.0.0",
+  "description": "This is a website where I compile useful information and resources for those looking to get a basic understanding of astronomy. The user will be able to look up astromony-related terms (black hole, gravity, dwarf planet, etc.) through a search bar and the appropriate information and resources will be displayed.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.5.1",
+    "cheerio": "^1.0.0-rc.12",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

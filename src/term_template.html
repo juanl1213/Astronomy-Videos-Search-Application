@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="term-title">term-title</title>
+    <link rel="stylesheet" type="text/css" href="template.css" /> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Angkor&family=Cairo:wght@500&family=Lato&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1 class="term-title">Term Title</h1>
+    <p id="term-content">Term Content</p>
+    <div id="youtube-videos">
+        <!-- Embed YouTube videos here -->
+    </div>
+
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const term = urlParams.get('term');
+
+        if (term) {
+            // Get all elements with the class "term-title"
+            const elements = document.getElementsByClassName('term-title');
+            
+            // Iterate through the elements and update their text content
+            for (const element of elements) {
+                element.textContent = term;
+            }
+
+            // You can fetch and display content related to the term here.
+        }
+            // Function to fetch YouTube videos based on the search term
+          // Function to fetch and filter YouTube videos based on the search term and description
+          function fetchAndFilterEducationalYouTubeVideos(searchTerm) {
+                // Replace 'YOUR_API_KEY' with your actual YouTube Data API key
+                const apiKey = 'AIzaSyCtZK0Ef1ugicZnM18t6lw6Ng1qv1PS2WE';
+                const maxResults = 3; // Number of videos to display
+
+                // Make a GET request to the YouTube Data API with the description filter
+                fetch(`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${searchTerm} educational&maxResults=${maxResults}&part=snippet&type=video&videoEmbeddable=true`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const videosContainer = document.getElementById('youtube-videos');
+
+                        // Iterate through the video results and filter by title and description
+                        data.items.forEach(video => {
+                            const videoTitle = video.snippet.title.toLowerCase();
+                            const videoDescription = video.snippet.description.toLowerCase();
+                            const videoTags = video.snippet.tags ? video.snippet.tags.map(tag => tag.toLowerCase()) : [];
+
+                            if (videoTitle.includes(searchTerm.toLowerCase()) || videoDescription.includes(searchTerm.toLowerCase()) ||  videoTags.includes(searchTerm.toLowerCase())) {
+                                const iframe = document.createElement('iframe');
+                                iframe.src = `https://www.youtube.com/embed/${video.id.videoId}`;
+                                iframe.width = '560'; // Set the desired width
+                                iframe.height = '315'; // Set the desired height
+                                videosContainer.appendChild(iframe);
+                            }
+                        });
+                    })
+                    .catch(error => console.error('YouTube API error:', error));
+            }
+
+            // Call the function to fetch and display filtered educational YouTube videos
+            fetchAndFilterEducationalYouTubeVideos(term);
+    </script>
+</body>
+</html>
+
+</body>
+</html>

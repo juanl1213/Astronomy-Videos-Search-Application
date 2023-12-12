@@ -39,14 +39,35 @@
                 const apiKey = 'AIzaSyCtZK0Ef1ugicZnM18t6lw6Ng1qv1PS2WE';
                 const maxResults = 3; // Number of videos to display
 
+                const searchQuery = `${searchTerm} astronomy`;
+
                 // Make a GET request to the YouTube Data API with the description filter
-                fetch(`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${searchTerm} educational&maxResults=${maxResults}&part=snippet&type=video&videoEmbeddable=true`)
+                fetch(`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${searchQuery} educational&maxResults=${maxResults}&part=snippet&type=video&videoEmbeddable=true`)
                     .then(response => response.json())
                     .then(data => {
                         const videosContainer = document.getElementById('youtube-videos');
 
+                        const sortedVideos = data.items.sort((a, b) => b.relevance - a.relevance);
+
+                        // Select the top three videos
+                        const topThreeVideos = sortedVideos.slice(0, 3);
+
+                        // Iterate through the top three videos and filter out "Video unavailable" videos
+                        topThreeVideos.forEach(video => {
+                        //const isEmbeddable = video.status && video.status.embeddable;
+
+                        // Check if the video is embeddable (not marked as "Video unavailable")
+                                const iframe = document.createElement('iframe');
+                                iframe.src = `https://www.youtube.com/embed/${video.id.videoId}`;
+                                iframe.width = '560'; // Set the desired width
+                                iframe.height = '315'; // Set the desired height
+                                videosContainer.appendChild(iframe);
+                            
+                        });
+                    })
                         // Iterate through the video results and filter by title and description
-                        data.items.forEach(video => {
+                        /*data.items.forEach(video => {
+                            //const isEmbeddable = video.status && video.status.embeddable;
                             const videoTitle = video.snippet.title.toLowerCase();
                             const videoDescription = video.snippet.description.toLowerCase();
                             const videoTags = video.snippet.tags ? video.snippet.tags.map(tag => tag.toLowerCase()) : [];
@@ -59,7 +80,7 @@
                                 videosContainer.appendChild(iframe);
                             }
                         });
-                    })
+                    })*/
                     .catch(error => console.error('YouTube API error:', error));
             }
 

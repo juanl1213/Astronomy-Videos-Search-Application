@@ -1,18 +1,3 @@
-// Generate stars dynamically
-function createStars(numStars) {
-    const starsContainer = document.querySelector('.stars');
-
-    for (let i = 0; i < numStars; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        star.style.left = Math.random() * 100 + 'vw'; /* Random horizontal position */
-        star.style.top = Math.random() * 100 + 'vh'; /* Random vertical position */
-        starsContainer.appendChild(star);
-    }
-}
-
-createStars(100); // Adjust the number of stars as needed
-
 
 const glossaryList = document.getElementById('glossary');
 
@@ -51,3 +36,18 @@ document.getElementById('search-form').addEventListener('submit', function (e) {
         const searchTerm = document.getElementById('search-input').value;
         window.location.href = `term_template.html?term=${encodeURIComponent(searchTerm)}`;
 });
+
+// Generate stars dynamically
+function createStars(numStars) {
+    const starsContainer = document.querySelector('.stars');
+
+    for (let i = 0; i < numStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + 'vw'; /* Random horizontal position */
+        star.style.top = Math.random() * 100 + 'vh'; /* Random vertical position */
+        starsContainer.appendChild(star);
+    }
+}
+
+createStars(100); // Adjust the number of stars as needed

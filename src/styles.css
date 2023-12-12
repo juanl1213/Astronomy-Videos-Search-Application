@@ -16,13 +16,17 @@ body, html {
     align-items: center; /* Center vertically on the viewport */
 }
 
+#search-form {
+    z-index: 1;
+}
+
 /* Style for the search input */
 #search-input {
     padding: 10px;
     width: 300px;
     border: 2px solid #ccc;
     border-radius: 5px;
-    outline: none;
+    /*outline: none;*/
 }
 
 /* Style for the search button */
@@ -54,16 +58,17 @@ h1 {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;/* Place the stars below other content */
+    /*/* Place the stars below other content */
 }
 
 .star {
-    position: relative;
+    position: absolute;
     width: 5px;
     height: 5px;
     background-color: #fff; /* White stars */
     border-radius: 50%;
-    animation: twinkling 2s infinite; /* Customize animation duration as needed */
+    animation: twinkling 2s infinite;
+    z-index: -1; /* Customize animation duration as needed */
 }
 
 /* Keyframes animation for twinkling effect */
@@ -76,5 +81,21 @@ h1 {
     }
     100% {
         opacity: 0.5;
+    }
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 18px; /* Adjust the font size for smaller screens */
+        margin-top: 10%; /* Adjust the margin for smaller screens */
+    }
+
+    #search-input {
+        width: 80%; /* Adjust the width of the input for smaller screens */
+    }
+
+    #search-button {
+        margin-left: 5px; /* Adjust the margin for smaller screens */
     }
 }

@@ -30,7 +30,7 @@ Users can search for astronomy-related terms using a search bar. As they type, a
 
 Term Details:
 
-Clicking on a term in the dropdown list or submitting a search query leads users to a page containing detailed information about the selected astronomy term. This information includes YouTube videos and research papers. 
+Clicking on a term in the dropdown list or submitting a search query leads users to a page containing detailed information about the selected astronomy term. This information includes YouTube videos and scientific articles.
 
 YouTube Integration:
 

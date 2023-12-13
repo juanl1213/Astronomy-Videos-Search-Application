@@ -4,6 +4,28 @@ const glossaryList = document.getElementById('glossary');
 //This function alone works to fetch the terms and attach them 
 //to the datalist element in the index.html page 
 
+/*const apiKey = '7f59af901d2d86f78a1fd60c1bf9426a';
+const apiUrl = 'https://api.elsevier.com/content/search/sciencedirect';
+
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+// Function to query the API for a given term
+async function queryScienceDirect(term) {
+  const queryUrl = `${apiUrl}?query=${encodeURIComponent(term)}&apiKey=${apiKey}`;
+
+  try {
+    const response = await fetch(queryUrl, { method: 'GET', headers: { 'Accept': 'application/json' } });
+    const data = await response.json();
+    
+    // Process the data as needed
+    console.log(`Results for ${term}:`, data);
+
+    await delay(1000);
+  } catch (error) {
+    console.error(`Error querying ScienceDirect for ${term}:`, error);
+  }
+}*/
+
+
 document.addEventListener('DOMContentLoaded', function() {
   fetch('http://localhost:3000/results')
       .then(response => response.json())
@@ -17,6 +39,8 @@ document.addEventListener('DOMContentLoaded', function() {
                   const option = document.createElement('option');
                   option.value = formattedTerm;
                   glossaryList.appendChild(option);
+
+                  queryScienceDirect(formattedTerm);
               });
           } else {
               console.error('Invalid or missing data:', data);

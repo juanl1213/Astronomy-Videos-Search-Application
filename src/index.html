@@ -16,11 +16,53 @@
             <form id="search-form" action="term_template.html" method="get">
                 <input type="text" id="search-input" name="term" placeholder="Type an astronomy-related term..." list="glossary">
                 <datalist id="glossary"></datalist>
-                <button id="search-button" type="submit">Search</button>
+                <button class="search-button" type="submit">Search</button>
             </form>
+            <!--<div class="loading-container">
+                <div id="loading-text">Fetching terms</div>
+                <div id="ellipsis">
+                    <div class="dot">.</div>
+                    <div class="dot">.</div>
+                    <div class="dot">.</div>
+                </div>
+            </div>-->
+
+            <div id="average-pageviews-container">
+                <div>Average Monthly Pageviews For All Terms:</div>
+                <div id="average-pageviews"></div>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <!-- New input for popularity -->
+            <h2>Term filtering criteria:</h2>
+            <div>
+            <label for="popularity">Popularity:</label>
+            <select id="popularity" name="popularity">
+                <option value="most-popular">Most popular only</option>
+                <option value="least-popular">Least popular only</option>
+                <option value="somewhat-popular">Somewhat popular</option>
+            </select>
+            </div>
+
+            <div>
+            <!-- New input for year -->
+            <label for="year">Year:</label>
+            <select id="year" name="year">
+            </select>
+            </div>
+
+            <div>
+            <!-- New input for monthly views -->
+            <label for="monthly-views">Monthly Views For:</label>
+            <select id="month" name="monthly-views">
+            </select>
+            </div>
+            
+            <button class="search-button" type="submit">Filter</button>
         </div>
         <div class="stars"></div>
     </div>
     <script src="script.js"></script>
 </body>
-</html>
+</html> 

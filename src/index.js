@@ -15,6 +15,10 @@ const MAX_REQUESTS_PER_SECOND = 100;
 let requestCount = 0;
 let lastRequestTimestamp = Date.now();
 
+
+let average = 0;
+
+
 app.listen(PORT, () => console.log(`server running on PORT ${PORT}`))
 //app.METHOD(PATH, HANDLER)
 
@@ -62,6 +66,8 @@ app.get('/results', async (req, res) => {
 
         // Fetch pageviews data for each term
         const pageviewsData = [];
+        let totalTerms = 0;
+        let totalPageviews = 0;
 
         for (const term of terms) {
             const project = 'en.wikipedia.org';
@@ -79,9 +85,13 @@ app.get('/results', async (req, res) => {
                 const dailyViews = response.data.items[0].views || 0;
                 
                 // Filter terms with views greater than 30000
-                if (dailyViews > 10000) {
+                if (dailyViews > 20000) {
                     const data = { term, pageviewsData: response.data };
                     pageviewsData.push(data);
+
+                    // Increment the counters
+                    totalTerms++;
+                    totalPageviews += dailyViews;
 
                     // Log the pageviews data for each term to the console
                     console.log(`Pageviews data for ${term}:`, response.data);
@@ -92,13 +102,19 @@ app.get('/results', async (req, res) => {
             }
         }
 
+        average = totalTerms > 0 ? Math.round(totalPageviews / totalTerms) : 0;
+
+        //console.log('Average Pageviews:', average);
+    
         // Send the accumulated pageviews data to the client
-        res.json({ pageviewsData, message: 'Pageviews data fetched for all terms.' });
+        res.json({ pageviewsData, average, message: 'Pageviews data fetched for all terms.' });
 
     } catch (error) {
         console.error('Error fetching glossary:', error.response ? error.response.data : error.message);
         res.status(500).send('Internal Server Error');
     }
+
+
 });
 
 

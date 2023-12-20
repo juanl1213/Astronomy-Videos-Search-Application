@@ -14,8 +14,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Populate the month dropdown
   function populateMonthSelect() {
-
-    // Loop through months and create options for the dropdown
     months.forEach((month, index) => {
       const option = document.createElement('option');
       option.value = index + 1; // Month values are 1-indexed
@@ -38,7 +36,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const availableTerms = Array.from(glossaryList.options).map(option => option.value.toLowerCase());
 
     // Validate the input term
-    if (!isValidTerm(searchTerm, availableTerms)) {
+    if (glossaryList.innerHTML === '') {
+      errorContainer.textContent = 'Error: Please specify filtering criteria.';
+    } else if (!isValidTerm(searchTerm, availableTerms)) {
       errorContainer.textContent = 'Error: Please select a term from the dropdown list.';
     } else {
       errorContainer.textContent = '';
@@ -79,14 +79,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
       glossaryList.innerHTML = '';
 
-      const pageviews = filteredData.map(item => {
-        const items = item.pageviewsData && item.pageviewsData.items;
-        const views = (items && items[0] && items[0].views) || 0;
-        return views;
-      });
+      const pageviews = filteredData.map(item => (item.pageviewsData?.items?.[0]?.views) || 0);
 
       if (pageviews.length > 0) {
-        // Calculate and log the median
         const sortedPageviews = pageviews.slice().sort((a, b) => a - b);
         const middleIndex = Math.floor(sortedPageviews.length / 2);
         const median = sortedPageviews.length % 2 === 0
@@ -94,20 +89,16 @@ document.addEventListener('DOMContentLoaded', function () {
           : sortedPageviews[middleIndex];
 
         console.log('Median Pageviews:', median);
-        medianPageviewsElement.textContent = `Median Monthly Pageviews For ${months[document.getElementById('month').value - 1]} : ${median}`;
+        medianPageviewsElement.textContent = `Median Monthly Pageviews For ${months[monthSelect.value - 1]} : ${median}`;
       } else {
         console.warn('No pageviews data available.');
       }
 
-      const sortedPageviews = pageviews.slice().sort((a, b) => a - b);
-      const { Q1, Q3 } = calculatePercentiles(sortedPageviews);
-
+      const { Q1, Q3 } = calculatePercentiles(pageviews.slice().sort((a, b) => a - b));
       const popularityFilteredData = filteredData.filter(item => {
-        const items = item.pageviewsData && item.pageviewsData.items;
-        const views = (items && items[0] && items[0].views);
+        const views = item.pageviewsData?.items?.[0]?.views;
         const popularity = document.getElementById("popularity");
 
-        // Filter data based on popularity
         if (popularity.value == "most-popular") {
           return views >= Q3;
         } else if (popularity.value == "somewhat-popular") {
@@ -147,12 +138,11 @@ document.addEventListener('DOMContentLoaded', function () {
   function createStars(numStars) {
     const starsContainer = document.querySelector('.stars');
 
-    // Create stars with random positions
     for (let i = 0; i < numStars; i++) {
       const star = document.createElement('div');
       star.className = 'star';
-      star.style.left = Math.random() * 100 + 'vw'; /* Random horizontal position */
-      star.style.top = Math.random() * 100 + 'vh'; /* Random vertical position */
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.top = Math.random() * 100 + 'vh';
       starsContainer.appendChild(star);
     }
   }

@@ -29,24 +29,19 @@
             
             <div id="error-container">
             </div>
-
-            <div id="average-pageviews-container">
-                <div>Median Monthly Pageviews For All Terms:</div>
-                <div id="average-pageviews"></div>
-            </div>
         </div>
 
         <form id="filter-form" action="" method="get">
         <div class="form-container">
             <!-- New input for popularity -->
-            <h2>Term filtering criteria:</h2>
+            <h2>Filters for Dropdown List of Terms: </h2>
             <div>
             <label for="popularity">Popularity:</label>
             <select id="popularity" name="popularity">
                 <option value="most-popular">Most popular only</option>
                 <option value="least-popular">Least popular only</option>
                 <option value="somewhat-popular">Somewhat popular</option>
-                <option value="somewhat-popular">Does not matter</option>
+                <option value="does-not-matter">Does not matter</option>
             </select>
             </div>
 
@@ -55,6 +50,10 @@
             <label for="monthly-views">Monthly Views For:</label>
             <select id="month" name="monthly-views">
             </select>
+            </div>
+
+            <div id="average-pageviews-container">
+                <div id="average-pageviews"></div>
             </div>
             
             <button id="filter-button" type="submit">Filter</button>

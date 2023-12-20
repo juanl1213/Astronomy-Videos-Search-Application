@@ -24,7 +24,7 @@ async function fetchAndStorePageviews(term) {
     const pageviewsData = [];
 
     for (let year = 2023; year <= 2023; year++) {
-        for (let month = 9; month <= 9; month++) {
+        for (let month = 1; month <= 11; month++) {
             const monthlyViews = await fetchPageviewsData(term, year, month);
             pageviewsData.push(monthlyViews);
         }

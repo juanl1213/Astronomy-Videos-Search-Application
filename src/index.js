@@ -1,12 +1,12 @@
-const PORT = 3000
-const axios = require('axios')
-const cheerio = require('cheerio')
-const express = require('express')
-const app = express()
-const cors = require('cors')
-app.use(cors())
+const express = require('express');
+const axios = require('axios');
+const cheerio = require('cheerio');
+const cors = require('cors');
 
-//const url = "https://en.wikipedia.org/wiki/Glossary_of_astronomy"
+const app = express();
+app.use(cors());
+
+const PORT = 3000;
 
 // Set the maximum requests per second
 const MAX_REQUESTS_PER_SECOND = 100;
@@ -15,16 +15,52 @@ const MAX_REQUESTS_PER_SECOND = 100;
 let requestCount = 0;
 let lastRequestTimestamp = Date.now();
 
-
 let average = 0;
 
+app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
 
-app.listen(PORT, () => console.log(`server running on PORT ${PORT}`))
-//app.METHOD(PATH, HANDLER)
+// Define a function to fetch and store pageviews data for a term
+async function fetchAndStorePageviews(term) {
+    const pageviewsData = [];
 
+    for (let year = 2023; year <= 2023; year++) {
+        for (let month = 9; month <= 9; month++) {
+            const monthlyViews = await fetchPageviewsData(term, year, month);
+            pageviewsData.push(monthlyViews);
+        }
+    }
+
+    // Calculate average
+    const average = pageviewsData.length > 0 ? Math.round(pageviewsData.reduce((acc, views) => acc + views, 0) / pageviewsData.length) : 0;
+
+    return { term, pageviewsData, average };
+}
+
+// Define a function to fetch pageviews data for a specific term and month
+async function fetchPageviewsData(term, year, month) {
+    const project = 'en.wikipedia.org';
+    const access = 'all-access';
+    const agent = 'all-agents';
+    const granularity = 'monthly';
+
+    const start = `${year}${month.toString().padStart(2, '0')}01`;
+    const end = `${year}${(month + 1).toString().padStart(2, '0')}01`;
+
+    const apiUrl = `https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/${project}/${access}/${agent}/${term}/${granularity}/${start}/${end}`;
+
+    try {
+        const response = await axios.get(apiUrl);
+        return response.data.items[0].views || 0;
+    } catch (error) {
+        console.error(`Error fetching pageviews for ${term} in ${year}-${month}:`, error.response ? error.response.data : error.message);
+        return 0;
+    }
+}
+
+// Define the route for fetching results
 app.get('/results', async (req, res) => {
-
     const now = Date.now();
+
     if (requestCount >= MAX_REQUESTS_PER_SECOND && now - lastRequestTimestamp < 1000) {
         // Return a 429 response if the rate limit is exceeded
         res.status(429).send('Too Many Requests');
@@ -36,7 +72,6 @@ app.get('/results', async (req, res) => {
 
     // Update the last request timestamp
     lastRequestTimestamp = now;
-
 
     const glossaryUrl = 'https://en.wikipedia.org/wiki/Glossary_of_astronomy';
 
@@ -50,71 +85,27 @@ app.get('/results', async (req, res) => {
 
         // Extract terms from the glossary
         $('.glossary dt', glossaryHtml).each(function () {
-
-
             // Replace spaces with underscores
             const termWithUnderscores = $(this).text().replace(/ /g, '_');
-
             const formattedTerm = termWithUnderscores.charAt(0).toUpperCase() + termWithUnderscores.slice(1);
-
             // URI encode the term
             const encodedTerm = encodeURIComponent(formattedTerm);
-
             terms.push(encodedTerm);
         });
 
-
         // Fetch pageviews data for each term
         const pageviewsData = [];
-        let totalTerms = 0;
-        let totalPageviews = 0;
-
         for (const term of terms) {
-            const project = 'en.wikipedia.org';
-            const access = 'all-access';
-            const agent = 'all-agents';
-            const granularity = 'monthly';
-            const start = '20230601';
-            const end = '20230701';
-
-            const apiUrl = `https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/${project}/${access}/${agent}/${term}/${granularity}/${start}/${end}`;
-
-            // Make the API call for each term
-            try {
-                const response = await axios.get(apiUrl);
-                const dailyViews = response.data.items[0].views || 0;
-                
-                // Filter terms with views greater than 30000
-                if (dailyViews > 20000) {
-                    const data = { term, pageviewsData: response.data };
-                    pageviewsData.push(data);
-
-                    // Increment the counters
-                    totalTerms++;
-                    totalPageviews += dailyViews;
-
-                    // Log the pageviews data for each term to the console
-                    console.log(`Pageviews data for ${term}:`, response.data);
-                }
-
-            } catch (error) {
-                console.error(`Error fetching pageviews for ${term}:`, error.response ? error.response.data : error.message);
-            }
+            const termData = await fetchAndStorePageviews(term);
+            pageviewsData.push(termData);
         }
 
-        average = totalTerms > 0 ? Math.round(totalPageviews / totalTerms) : 0;
-
-        //console.log('Average Pageviews:', average);
-    
-        // Send the accumulated pageviews data to the client
         res.json({ pageviewsData, average, message: 'Pageviews data fetched for all terms.' });
 
     } catch (error) {
         console.error('Error fetching glossary:', error.response ? error.response.data : error.message);
         res.status(500).send('Internal Server Error');
     }
-
-
 });
 
 

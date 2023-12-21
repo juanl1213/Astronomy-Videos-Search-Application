@@ -15,7 +15,6 @@ const MAX_REQUESTS_PER_SECOND = 100;
 let requestCount = 0;
 let lastRequestTimestamp = Date.now();
 
-let average = 0;
 
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
 

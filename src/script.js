@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const CACHE_KEY = 'cachedResults';
     const cachedResults = JSON.parse(localStorage.getItem(CACHE_KEY));
 
+
     // Check if cached results exist
     if (cachedResults) {
       console.log("Cached results exist");

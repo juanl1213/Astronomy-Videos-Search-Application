@@ -100,7 +100,7 @@ app.get('/results', async (req, res) => {
             pageviewsData.push(termData);
         }
 
-        res.json({ pageviewsData, average, message: 'Pageviews data fetched for all terms.' });
+        res.json({ pageviewsData, message: 'Pageviews data fetched for all terms.' });
 
     } catch (error) {
         console.error('Error fetching glossary:', error.response ? error.response.data : error.message);

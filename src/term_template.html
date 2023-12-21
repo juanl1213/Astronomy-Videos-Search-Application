@@ -20,7 +20,6 @@
     </div>
 
     <script>
-        createStars(100);
 
         const urlParams = new URLSearchParams(window.location.search);
         const term = urlParams.get('term');
@@ -86,8 +85,8 @@
             for (let i = 0; i < numStars; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
-                star.style.left = Math.random() * 100 + 'vw'; /* Random horizontal position */
-                star.style.top = Math.random() * 100 + 'vh'; /* Random vertical position */
+                star.style.left = Math.random() * 100 + 'vw';  //Random horizontal position 
+                star.style.top = Math.random() * 100 + 'vh';  //Random vertical position 
                 starsContainer.appendChild(star);
             }
         }         

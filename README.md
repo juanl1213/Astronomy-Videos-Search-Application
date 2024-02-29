@@ -60,29 +60,12 @@ The user interface allows for smooth navigation, with real-time term suggestions
 
 The application is deployed to a hosting platform like Render, making it accessible to users worldwide.
 
-# Project Title
-
-Astronomy Videos Search Application
-
-## Description
-
-The Astronomy Videos Search is a web application that allows users to explore and filter through a glossary of terms. It provides features such as searching for specific terms, filtering by popularity, and visualizing median pageviews for a selected month.
-
-## Features
-
-- Search for terms in the glossary
-- Filter terms based on popularity (most-popular, somewhat-popular, least-popular)
-- Visualize the median pageviews for a selected month
-- Dynamic star generation for a visually appealing experience
-
-## Getting Started
-
-### Prerequisites
+## Prerequisites
 
 - Node.js
 - npm (Node Package Manager)
 
-### Installation
+## Installation
 
 1. Clone the repository:
     ```bash

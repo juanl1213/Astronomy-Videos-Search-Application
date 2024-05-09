@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to fetch results from the server
     function fetchResults() {
-      fetch('http://localhost:3000/results')
+      fetch('https://astronomy-server.onrender.com')
         .then(response => response.json())
         .then(handleResults)
         .catch(error => console.error('Fetch error:', error));
